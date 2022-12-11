@@ -18,9 +18,17 @@ async function main() {
     "0x2514895c72f50D8bd4B4F9b1110F0D6bD2c97526", //wbnb
     "0x9331b55D9830EF609A2aBCfAc0FBCE050A52fdEa"  //busd
   ];
-  const flashTokenAddress = "0x7ef95a0fee0dd31b22626fa2e10ee6a223f8a684";
+  const flashTokenAddress = "0x9331b55D9830EF609A2aBCfAc0FBCE050A52fdEa";  //busd address
   const SafeStakingContract = await ethers.getContractFactory("SafeStaking");
   const safeStaking = await SafeStakingContract.deploy();
+  
+  await safeStaking.connect(owner).setFlashTokenContract(flashTokenAddress);
+  await safeStaking.connect(owner).setPancakeRouterContract(pancakeswapRouter);
+
+  await safeStaking.connect(owner).modifyLockPeriods(90,200); // 2% divide by 10000
+  await safeStaking.connect(owner).modifyLockPeriods(180,500); // 5% divide by 10000
+  await safeStaking.connect(owner).modifyLockPeriods(365,1200); // 12% divide by 10000
+  await safeStaking.connect(owner).modifyLockPeriods(750,2500); // 25% divide by 10000
 
 }
 // We recommend this pattern to be able to use async/await everywhere

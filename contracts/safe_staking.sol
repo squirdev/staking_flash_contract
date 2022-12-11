@@ -30,7 +30,6 @@ contract SafeStaking  is Ownable{
 
     
     constructor(){
-
         currentPositionId = 0;
     }
 
@@ -117,11 +116,12 @@ contract SafeStaking  is Ownable{
     function stakeToken (address _tokenAddress,uint256 _amount,uint256 numDays) external payable {
         require(tiers[numDays] > 0, "Mapping not found");
         uint256 amount = swapTokenToFlash(_tokenAddress,_amount);
+        uint256 date =numDays*1 seconds;
         positions[currentPositionId] = Position(
             currentPositionId,
             msg.sender,
             block.timestamp,
-            block.timestamp+(numDays * 15180),
+            block.timestamp+date,
             tiers[numDays],
             amount,
             calculateInterest(tiers[numDays], amount),
@@ -175,4 +175,5 @@ contract SafeStaking  is Ownable{
         require(address(_pancake) != address(0),"Invalid address");
         pancakeSwapContract = _pancake;
     }
+    
 }
