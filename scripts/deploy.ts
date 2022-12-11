@@ -21,15 +21,15 @@ async function main() {
   const flashTokenAddress = "0x9331b55D9830EF609A2aBCfAc0FBCE050A52fdEa";  //busd address
   const SafeStakingContract = await ethers.getContractFactory("SafeStaking");
   const safeStaking = await SafeStakingContract.deploy();
-  
+  console.log("safeStakingContract",safeStaking.address);
   await safeStaking.connect(owner).setFlashTokenContract(flashTokenAddress);
   await safeStaking.connect(owner).setPancakeRouterContract(pancakeswapRouter);
-
+  console.log("start to add tier days");
   await safeStaking.connect(owner).modifyLockPeriods(90,200); // 2% divide by 10000
   await safeStaking.connect(owner).modifyLockPeriods(180,500); // 5% divide by 10000
   await safeStaking.connect(owner).modifyLockPeriods(365,1200); // 12% divide by 10000
   await safeStaking.connect(owner).modifyLockPeriods(750,2500); // 25% divide by 10000
-
+  console.log("end");
 }
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.
